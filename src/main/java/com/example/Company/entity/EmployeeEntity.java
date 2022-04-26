@@ -2,14 +2,14 @@ package com.example.Company.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Table(name = "Employee")
 public class EmployeeEntity {
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "e_name")
@@ -36,12 +37,11 @@ public class EmployeeEntity {
 	private String avatar;
 	@Column(name = "e_phone")
 	private String phone;
-	@Column(name = "e_idcard")
-	@JoinColumn(name = "i_number")
+	@OneToOne(mappedBy = "employeeEntity", cascade = CascadeType.ALL)
 	private IdCard idnumber;
 	@Column(name = "e_level")
 	private int level;
 	@Column(name = "e_salary")
 	private double salary;
-	
+
 }
