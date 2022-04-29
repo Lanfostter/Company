@@ -1,30 +1,32 @@
 package com.example.Company.entity;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
 @Entity
-@Table(name = "IdCard")
+@Table(name = "department")
 @Data
-public class IdCard {
+public class DepartmentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "i_id")
+	@Column(name = "d_id")
 	private int id;
-	@Column(name = "i_number")
-	private String idnumber;
-	@OneToOne
-	@JoinColumn(name = "e_id")
-	private EmployeeEntity employeeEntity;
+	@Column(name = "d_name")
+	private String name;
+	@Column(name = "d_creationdate")
+	private Date creationdate;
+	@OneToMany(mappedBy = "departmentEntity")
+	private List<Ticket> tickets;
 }
