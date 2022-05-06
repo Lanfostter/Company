@@ -32,7 +32,8 @@
 			<div class="col-12 col-sm-3">
 				<ul class="list-group">
 					<li class="list-group-item">Quản lý khiếu nại</li>
-					<li class="list-group-item">Quản lý phòng ban</li>
+					<li class="list-group-item"><a th:href="@{/department/list}">Quản
+							lý phòng ban</a></li>
 					<li class="list-group-item">Thoát</li>
 				</ul>
 			</div>
@@ -49,10 +50,8 @@
 								<div class="row">
 									<label class="col">Phòng ban:</label> <select
 										class="form-select col">
-										<option>Chọn</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
+										<option th:each="item : ${departments}" th:value="${item.id}"
+											th:text="${item.name}"></option>
 									</select>
 								</div>
 							</div>
@@ -88,12 +87,13 @@
 								<th>Reply</th>
 								<th>Status</th>
 								<th>Handle Date</th>
+								<th>Department</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="t : ${tickets}">
+							<tr th:each="t : ${tickets.pageList}">
 								<td colspan="1" class="" th:text="${t.id}"></td>
 								<td colspan="1" th:text="${t.phone}"></td>
 								<td colspan="1" th:text="${t.complain}"></td>
@@ -101,46 +101,28 @@
 								<td colspan="1" th:text="${t.reply}"></td>
 								<td colspan="1" th:text="${t.status}"></td>
 								<td colspan="1" th:text="${t.handledate}"></td>
-								<td colspan="1"><a th:href="@{'/ticket/update?id='+${t.id}}"><i
+								<td colspan="1" th:text="${t.departmentEntity?.name}"></td>
+								<td colspan="1"><a
+									th:href="@{'/ticket/update?id='+${t.id}}"><i
 										class="fa-solid fa-marker text-dark"></i></a></td>
 								<td><a th:href="@{'/ticket/delete?id=' + ${t.id}}"><i
 										class="fa-solid fa-trash-can text-danger"></i></a></td>
-								<!-- <td><a data-bs-toggle="modal"
-									data-bs-target="#staticBackdrop"><i
-										class="fa-solid fa-trash-can text-danger"></i></a>
-									<div class="modal fade" id="staticBackdrop"
-										data-bs-backdrop="static" data-bs-keyboard="false"
-										tabindex="-1" aria-labelledby="staticBackdropLabel"
-										aria-hidden="true">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="staticBackdropLabel">Cảnh
-														báo</h5>
-													<button type="button" class="btn-close"
-														data-bs-dismiss="modal" aria-label="Close"></button>
-												</div>
-												<div class="modal-body">Bạn có chắc chắn muốn xóa phản
-													hồi này không ?</div>
-												<div class="modal-footer">
-
-													<a th:href="@{'/ticket/delete?id=' + ${t.id}"
-														class="btn btn-primary btn-lg active">Có</a> <a
-														th:href="@{/#}" class="btn btn-secondary btn-lg active">Không</a>
-												</div>
-											</div>
-										</div>
-									</div></td>
- -->
 							</tr>
 						</tbody>
 					</table>
 					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						<li
+							th:class="${currentIndex == 1}?'page-item disabled': 'page-item'"><a
+							class="page-link"
+							th:href="@{'/ticket/page/'+ ${currentIndex - 1}}">Previous</a></li>
+						<li th:each="item : ${#numbers.sequence(beginIndex, endIndex)}"
+							th:class="${currentIndex == 1}?'page-item active':'page-item'"><a
+							class="page-link" th:href="@{'/ticket/page/'+ ${item}}"
+							th:text="${item}"></a></li>
+						<li
+							th:class="${currentIndex == totalPageCount}?'page-item disabled': 'page-item'"><a
+							class="page-link"
+							th:href="@{'/ticket/page/'+ ${currentIndex + 1}}">Next</a></li>
 					</ul>
 				</div>
 			</div>

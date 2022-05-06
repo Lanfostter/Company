@@ -30,20 +30,20 @@
 						<label for="exampleInputEmail1" class="form-label">Phone</label> <input
 							type="text" class="form-control" th:field="*{phone}">
 					</div>
-		
+
 					<div class="mb-3">
 						<label for="exampleFormControlTextarea1" class="form-label">Complain</label>
 						<textarea class="form-control" id="exampleFormControlTextarea1"
 							rows="3" th:field="*{complain}"></textarea>
 					</div>
-				<!-- 	<div class="mb-3">
-						<label for="exampleDataList" class="form-label">Status</label> <select
-							class="form-select" aria-label="Default select example"
-							th:field="*{Status}">
-							<option value="true">Đã xử lý</option>
-							<option value="false">Chưa xử lý</option>
+					<div class="mb-3">
+						<label for="exampleDataList" class="form-label">Department</label>
+						<select class="form-select" aria-label="Default select example"
+							th:field="*{departmentEntity}">
+							<option th:each="item : ${departments}" th:value="${item.id}"
+								th:text="${item.name}"></option>
 						</select>
-					</div> -->
+					</div>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 			</div>
